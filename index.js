@@ -1,7 +1,7 @@
 'use strict';
 
 const joi = require('joi');
-const { find, get, isEqual, isNumber, isPlainObject, isString, merge, set, uniqWith, isObject } = require('lodash');
+const { find, get, isEqual, isNumber, isPlainObject, isString, merge, set, uniqWith } = require('lodash');
 
 const patterns = {
 	alphanum: '^[a-zA-Z0-9]*$',
@@ -131,12 +131,12 @@ const parseAsType = {
 
 		const min = find(schema._rules, { name: 'min' });
 		if (min) {
-			swagger.minimum = isObject(min.args.limit) ? 0 : min.args.limit;
+			swagger.minimum = min.args.limit;
 		}
 
 		const max = find(schema._rules, { name: 'max' });
 		if (max) {
-			swagger.maximum = isObject(max.args.limit) ? 0 : max.args.limit;
+			swagger.maximum = max.args.limit;
 		}
 
 		Object.assign(swagger, parseValidsAndInvalids(schema, (s) => isNumber(s)));
