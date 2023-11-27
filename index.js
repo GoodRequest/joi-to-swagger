@@ -397,7 +397,7 @@ function parse (schema, existingComponents, isSchemaOverride) {
 	}
 
 	if (schema._valids && schema._valids.has(null)) {
-		swagger.nullable = true;
+		swagger.type = [ swagger.type, 'null' ];
 	}
 
 	const description = get(schema, '_flags.description');

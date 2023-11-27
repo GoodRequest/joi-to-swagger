@@ -262,9 +262,8 @@ suite('swagger converts', (s) => {
 		'string with valid',
 		joi.string().valid('A', 'B', 'C', null),
 		{
-			type: 'string',
+			type: [ 'string', 'null' ],
 			enum: [ 'A', 'B', 'C' ],
-			nullable: true,
 		},
 	);
 
@@ -328,8 +327,7 @@ suite('swagger converts', (s) => {
 		'boolean with allow null',
 		joi.boolean().allow(null),
 		{
-			type: 'boolean',
-			nullable: true,
+			type: [ 'boolean', 'null' ],
 		},
 	);
 
