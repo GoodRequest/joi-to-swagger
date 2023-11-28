@@ -38,7 +38,7 @@ suite('swagger converts', (s) => {
 	}
 
 	simpleTest(
-		'min max - from to reference',
+		'integer min max with references',
 		{
 			durationFrom: joi.number().integer().min(0).max(999),
 			durationTo: joi.number().integer().min(joi.ref('durationFrom')).max(999),
@@ -55,6 +55,35 @@ suite('swagger converts', (s) => {
 					type: 'integer',
 					minimum: 0,
 					maximum: 999,
+				},
+			},
+			additionalProperties: false,
+		},
+	);
+
+	simpleTest(
+		'integer min max with references and metadata',
+		{
+			durationFrom: joi.number().integer().min(0).max(10),
+			durationTo: joi.number().integer().min(joi.ref('durationFrom')).max(joi.ref('max'))
+				.meta({ refValues: { durationFrom: 5, max: 10 } }),
+			max: joi.number().integer(),
+		},
+		{
+			type: 'object',
+			properties: {
+				durationFrom: {
+					type: 'integer',
+					minimum: 0,
+					maximum: 10,
+				},
+				durationTo: {
+					type: 'integer',
+					minimum: 5,
+					maximum: 10,
+				},
+				max: {
+					type: 'integer',
 				},
 			},
 			additionalProperties: false,
@@ -233,9 +262,8 @@ suite('swagger converts', (s) => {
 		'string with valid',
 		joi.string().valid('A', 'B', 'C', null),
 		{
-			type: 'string',
+			type: [ 'string', 'null' ],
 			enum: [ 'A', 'B', 'C' ],
-			nullable: true,
 		},
 	);
 
@@ -299,8 +327,7 @@ suite('swagger converts', (s) => {
 		'boolean with allow null',
 		joi.boolean().allow(null),
 		{
-			type: 'boolean',
-			nullable: true,
+			type: [ 'boolean', 'null' ],
 		},
 	);
 
