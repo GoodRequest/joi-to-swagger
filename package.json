@@ -39,7 +39,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.1.1",
     "joi": "^17.7.0",
-    "tap": "^16.3.2",
+    "tap": "^21.7.4",
     "tapsuite": "^2.0.1"
   },
   "engines": {
